@@ -1,0 +1,201 @@
+[gd_scene load_steps=26 format=3 uid="uid://ches5qnwqrjqv"]
+
+[ext_resource type="Script" path="res://scripts/player.gd" id="1_bb6g8"]
+[ext_resource type="Texture2D" uid="uid://bue16ictnnnql" path="res://assets/art/player/Void-Sheet.png" id="1_g5wxn"]
+[ext_resource type="Script" path="res://scripts/statemachine/state_machine.gd" id="3_m8xio"]
+[ext_resource type="Script" path="res://scripts/player/on_floor_state.gd" id="4_8jnmj"]
+[ext_resource type="Script" path="res://scripts/player/on_right_wall_state.gd" id="5_13n7v"]
+[ext_resource type="Script" path="res://scripts/player/on_left_wall_state.gd" id="6_itm1a"]
+[ext_resource type="Script" path="res://scripts/player/on_ceiling_state.gd" id="7_x5q3n"]
+[ext_resource type="Script" path="res://scripts/player/in_air_state.gd" id="8_5ctkv"]
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_5iwl1"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(0, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ok0u"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(32, 0, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_60rcg"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(0, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_05hnj"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(32, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_812td"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(64, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_wrnhj"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(96, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_u24j4"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(128, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_608j1"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(160, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_lx8ud"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(192, 64, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_ui5kn"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(0, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_2girk"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(32, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_qiyj4"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(64, 32, 32, 32)
+
+[sub_resource type="AtlasTexture" id="AtlasTexture_6ogbj"]
+atlas = ExtResource("1_g5wxn")
+region = Rect2(96, 32, 32, 32)
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_ufe2m"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_5iwl1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ok0u")
+}],
+"loop": true,
+"name": &"idle",
+"speed": 3.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_60rcg")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_05hnj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_812td")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_wrnhj")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_u24j4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_608j1")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_lx8ud")
+}],
+"loop": false,
+"name": &"jump",
+"speed": 8.0
+}, {
+"frames": [{
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_ui5kn")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_2girk")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_qiyj4")
+}, {
+"duration": 1.0,
+"texture": SubResource("AtlasTexture_6ogbj")
+}],
+"loop": true,
+"name": &"move",
+"speed": 6.0
+}]
+
+[sub_resource type="CapsuleShape2D" id="CapsuleShape2D_ctwp6"]
+radius = 3.0
+height = 10.0
+
+[sub_resource type="Gradient" id="Gradient_6uj8q"]
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_mfga4"]
+gradient = SubResource("Gradient_6uj8q")
+fill = 1
+fill_from = Vector2(0.5, 0.5)
+fill_to = Vector2(0.649573, 0.339031)
+
+[node name="Player" type="CharacterBody2D"]
+script = ExtResource("1_bb6g8")
+FREQUENCY = 0.001
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+sprite_frames = SubResource("SpriteFrames_ufe2m")
+animation = &"idle"
+autoplay = "idle"
+frame_progress = 0.203874
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+position = Vector2(0, 13)
+rotation = 1.5708
+shape = SubResource("CapsuleShape2D_ctwp6")
+
+[node name="PointLight2D" type="PointLight2D" parent="."]
+position = Vector2(0, 13)
+energy = 0.7
+texture = SubResource("GradientTexture2D_mfga4")
+
+[node name="CastR" type="RayCast2D" parent="."]
+position = Vector2(0, 13)
+rotation = -1.5708
+target_position = Vector2(0, 7)
+
+[node name="CastD" type="RayCast2D" parent="."]
+position = Vector2(0, 13)
+target_position = Vector2(0, 7)
+
+[node name="CastL" type="RayCast2D" parent="."]
+position = Vector2(0, 13)
+rotation = 1.5708
+target_position = Vector2(0, 8)
+
+[node name="CastU" type="RayCast2D" parent="."]
+position = Vector2(0, 13)
+rotation = 3.14159
+target_position = Vector2(0, 7)
+
+[node name="SurfaceStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("3_m8xio")
+current_state = NodePath("OnFloorState")
+
+[node name="OnFloorState" type="Node" parent="SurfaceStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("4_8jnmj")
+actor = NodePath("../..")
+
+[node name="OnRightWallState" type="Node" parent="SurfaceStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("5_13n7v")
+actor = NodePath("../..")
+
+[node name="OnLeftWallState" type="Node" parent="SurfaceStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("6_itm1a")
+actor = NodePath("../..")
+
+[node name="OnCeilingState" type="Node" parent="SurfaceStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("7_x5q3n")
+actor = NodePath("../..")
+
+[node name="InAirState" type="Node" parent="SurfaceStateMachine" node_paths=PackedStringArray("actor")]
+script = ExtResource("8_5ctkv")
+actor = NodePath("../..")
+
+[node name="TransitionTimeout" type="Timer" parent="SurfaceStateMachine"]
+wait_time = 0.1
+one_shot = true
+
+[connection signal="timeout" from="SurfaceStateMachine/TransitionTimeout" to="SurfaceStateMachine" method="_on_transition_timeout_timeout"]
